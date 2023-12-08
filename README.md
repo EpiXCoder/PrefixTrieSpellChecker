@@ -18,29 +18,29 @@ The application uses a Trie, a tree-like data structure that stores a dynamic se
 
 ## Running the Application
 
-To run the application, you'll need Python installed on your machine. The application has been tested with Python 3.x.
+To run the application, you'll need Python installed on your machine. The application has been tested with Python 3.8.
 
 ### Steps:
 
 1. **Clone the Repository**:
-git clone [URL to your repository]
+git clone [[URL to your repository](https://github.com/EpiXCoder/PrefixTrieSpellChecker.git)]
 2. **Navigate to the Application Directory**:
 cd [Application Directory]
 3. **Load the Dictionary**:
 - Place your dictionary file named `words` in the application directory. This file should contain a list of words, one per line.
 4. **Run the Application**:
-python [Name of your main application file]
-5. **Use the Interface**:
-- The application will prompt you to enter words for spell checking and will display if the word is spelled correctly or not.
-- If a word is misspelled, it will provide suggestions for correct spelling.
+python3 app.py
+5. **Use the text editor UI**:
+- run the html
+- Start typing in the text editor
+- If you mispell a word, the application will underline the word in red and provide suggestions for correct spelling.
+- Caveat: You must correct the words as you type and not wait till the end to do the correction
 
 ## Contributing
 
 Contributions to this project are welcome! Please fork the repository and submit a pull request with your proposed changes.
 
-## License
 
-[Specify the license or state 'This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details']
 
 ## Acknowledgments
 

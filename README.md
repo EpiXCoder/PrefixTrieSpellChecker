@@ -27,14 +27,14 @@ git clone https://github.com/EpiXCoder/PrefixTrieSpellChecker.git
 2. **Navigate to the Application Directory**:
 cd [Application Directory]
 3. **Load the Dictionary**:
-- Place your dictionary file named `words` in the application directory. This file should contain a list of words, one per line.
+>- Place your dictionary file named `words` in the application directory. This file should contain a list of words, one per line.
 4. **Run the Application**:
 python3 app.py
 5. **Use the text editor UI**:
-- run the html
-- Start typing in the text editor
-- If you mispell a word, the application will underline the word in red and provide suggestions for correct spelling.
-- Caveat: You must correct the words as you type and not wait till the end to do the correction
+>- run the html
+>- Start typing in the text editor
+>- If you mispell a word, the application will underline the word in red and provide suggestions for correct spelling.
+>- Caveat: You must correct the words as you type and not wait till the end to do the correction
 
 ## Contributing
 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Editor with Spell Check</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .misspelled { text-decoration: underline red wavy; }
+
+        #suggestions-sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background-color: #f3f3f3;
+            border-left: 1px solid #ccc;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        li {
+            list-style: none;
+            text-align: center;
+        }
+
+        ul{
+            margin-top: 0px;
+        }
+
+        #dym{
+            margin-bottom: 0px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Spell-Checker</h1>
+    <textarea id="editor" rows="10" cols="50"></textarea>
+    <div id="suggestions-sidebar" style="display: none;">
+        <p id="dym">Did you mean:</p>
+        <ul id="suggestions-list"></ul>
+    </div>
+
+    <script>
+
+        var lastCheckedWord = ""; 
+
+        $('#editor').on('input', function(event) {
+            var cursorPosition = event.target.selectionStart;
+            var text = $(this).val();
+
+            var leftText = text.slice(0, cursorPosition);
+            var rightText = text.slice(cursorPosition);
+
+            // Extracts the word around the cursor
+            var leftMatch = leftText.match(/\b(\w+)$/);
+            var rightMatch = rightText.match(/^(\w+)\b/);
+
+            var currentWord = "";
+            if (leftMatch) {
+                currentWord += leftMatch[0];
+            }
+            if (rightMatch) {
+                currentWord += rightMatch[0];
+            }
+
+            // Checks spelling when space, punctuation, or at the end of text is encountered
+            if (/\s|[.,!?]/.test(text.charAt(cursorPosition)) || cursorPosition === text.length) {
+                if (currentWord && currentWord !== lastCheckedWord) {
+                    lastCheckedWord = currentWord;
+                    checkSpelling(currentWord);
+                }
+            }
+        });
+
+        function checkSpelling(word) {
+            $.ajax({
+                url: 'http://localhost:5000/check_spelling',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ word: word }),
+                success: function(response) {
+                    if (!response.is_correct) {
+                        displaySuggestions(word, response.suggestions);
+                    } else {
+                        $('#suggestions-sidebar').hide();
+                    }
+                }
+            });
+        }
+
+        function displaySuggestions(word, suggestions) {
+            var suggestionsList = $('#suggestions-list');
+            suggestionsList.empty();
+
+            if (suggestions.length > 0) {
+                suggestions.forEach(function(suggestion) {
+                    var listItem = $('<li/>')
+                        .text(suggestion)
+                        .css('cursor', 'pointer')
+                        .click(function() {
+                            replaceWord(word, suggestion);
+                        });
+                    suggestionsList.append(listItem);
+                });
+
+                $('#suggestions-sidebar').show();
+            } else {
+                $('#suggestions-sidebar').hide();
+            }
+        }
+
+        function replaceWord(oldWord, newWord) {
+            var textArea = $('#editor');
+            var text = textArea.val();
+            text = text.replace(new RegExp('\\b' + oldWord + '\\b', 'g'), newWord);
+            textArea.val(text);
+            $('#suggestions-sidebar').hide();
+        }
+
+    </script>
+</body>
+</html>

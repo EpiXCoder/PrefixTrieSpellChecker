@@ -23,7 +23,7 @@ To run the application, you'll need Python installed on your machine. The applic
 ### Steps:
 
 1. **Clone the Repository**:
-git clone [[URL to your repository](https://github.com/EpiXCoder/PrefixTrieSpellChecker.git)]
+git clone https://github.com/EpiXCoder/PrefixTrieSpellChecker.git
 2. **Navigate to the Application Directory**:
 cd [Application Directory]
 3. **Load the Dictionary**:
